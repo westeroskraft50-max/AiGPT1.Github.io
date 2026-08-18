@@ -1,0 +1,71 @@
+<script>
+const form = document.getElementById("form");
+const input = document.getElementById("input");
+const chat = document.getElementById("chat");
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const text = input.value.trim();
+
+    if (text === "") {
+        return;
+    }
+
+    const welcome = document.getElementById("welcome");
+
+    if (welcome) {
+        welcome.remove();
+    }
+
+    // Сообщение пользователя
+    const userMessage = document.createElement("div");
+    userMessage.className = "message user";
+
+    const userBubble = document.createElement("div");
+    userBubble.className = "bubble";
+    userBubble.textContent = text;
+
+    userMessage.appendChild(userBubble);
+    chat.appendChild(userMessage);
+
+    // Очищаем поле
+    input.value = "";
+
+    // Прокручиваем чат вниз
+    chat.scrollTop = chat.scrollHeight;
+
+    // Временный ответ AiGPT
+    setTimeout(function() {
+
+        const aiMessage = document.createElement("div");
+        aiMessage.className = "message ai";
+
+        const aiBubble = document.createElement("div");
+        aiBubble.className = "bubble";
+        aiBubble.textContent =
+            "Привет! Я AiGPT 🤖 Сейчас это демонстрационная версия. Для настоящих ответов нужно подключить API.";
+
+        aiMessage.appendChild(aiBubble);
+        chat.appendChild(aiMessage);
+
+        chat.scrollTop = chat.scrollHeight;
+
+    }, 500);
+});
+
+function newChat() {
+
+    chat.innerHTML = `
+        <div class="welcome" id="welcome">
+            <div>
+                <h1>Чем я могу помочь?</h1>
+                <p>AiGPT</p>
+            </div>
+        </div>
+    `;
+
+    input.value = "";
+    input.focus();
+}
+</script>
